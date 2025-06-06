@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kkangpae Cyber-Gothic Castle Complex</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cinzel:wght@400;600&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Orbitron', monospace;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3), transparent 50%),
+                linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
+            color: #e0e0e0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 255, 0.03) 2px,
+                    rgba(0, 255, 255, 0.03) 4px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 255, 0.03) 2px,
+                    rgba(0, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.8),
+                0 0 20px rgba(0, 255, 255, 0.5),
+                0 0 30px rgba(0, 255, 255, 0.3),
+                2px 2px 4px rgba(0,0,0,0.8);
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .castle-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .floor {
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(20, 20, 40, 0.8)),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 255, 0.1) 10px,
+                    rgba(0, 255, 255, 0.1) 20px
+                );
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .floor::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 13px;
+            pointer-events: none;
+        }
+
+        .floor:hover::before {
+            opacity: 1;
+        }
+
+        .floor:hover {
+            background: 
+                linear-gradient(135deg, rgba(0, 20, 40, 0.8), rgba(40, 40, 80, 0.9)),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 255, 0.2) 10px,
+                    rgba(0, 255, 255, 0.2) 20px
+                );
+            border-color: rgba(0, 255, 255, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 40px rgba(0, 255, 255, 0.2),
+                0 5px 20px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .floor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .floor-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .floor-number {
+            background: linear-gradient(45deg, #ff0080, #8000ff, #0080ff);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .division-chief {
+            color: #ff8000;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px rgba(255, 128, 0, 0.5);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .floor-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .room-section {
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(20, 20, 40, 0.6));
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid #00ffff;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .room-title {
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+            font-family: 'Cinzel', serif;
+        }
+
+        .room-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .room-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            font-size: 0.95em;
+            transition: color 0.2s ease;
+        }
+
+        .room-list li:hover {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+        }
+
+        .room-list li:last-child {
+            border-bottom: none;
+        }
+
+        .access-info {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(128, 0, 255, 0.2));
+            border-left: 4px solid #ff0080;
+            border-top: 1px solid rgba(255, 0, 128, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .outdoor-areas {
+            background: linear-gradient(135deg, rgba(0, 100, 0, 0.3), rgba(0, 50, 25, 0.4));
+            border-color: rgba(0, 255, 0, 0.4);
+        }
+
+        .basement {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.4), rgba(101, 67, 33, 0.5));
+            border-color: rgba(255, 140, 0, 0.4);
+        }
+
+        .command-floors {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(218, 165, 32, 0.4));
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .division-floors {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.4));
+            border-color: rgba(138, 43, 226, 0.4);
+        }
+
+        .common-areas {
+            background: linear-gradient(135deg, rgba(50, 205, 50, 0.3), rgba(34, 139, 34, 0.4));
+            border-color: rgba(50, 205, 50, 0.4);
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .legend-item {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(20, 20, 40, 0.8));
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            border-color: rgba(0, 255, 255, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .legend-color {
+            width: 50px;
+            height: 25px;
+            margin: 0 auto 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .outdoor-color { background: linear-gradient(135deg, #00ff00, #008000); }
+        .basement-color { background: linear-gradient(135deg, #ff8c00, #654321); }
+        .command-color { background: linear-gradient(135deg, #ffd700, #daa520); }
+        .division-color { background: linear-gradient(135deg, #8a2be2, #4b0082); }
+        .common-color { background: linear-gradient(135deg, #32cd32, #228b22); }
+
+        .note {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.3));
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            font-style: italic;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .floor-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .floor-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+        }
+
+        .restricted {
+            color: #ff4081;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 64, 129, 0.5);
+        }
+
+        .classified {
+            color: #ff8000;
+            font-style: italic;
+            text-shadow: 0 0 5px rgba(255, 128, 0, 0.3);
+        }
+
+        .deputy-quarters {
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(0, 100, 200, 0.3));
+            border-left-color: #0096ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏰 KKANGPAE CYBER-GOTHIC CASTLE COMPLEX</h1>
+
+        <div class="castle-layout">
+            <!-- Outdoor Areas -->
+            <div class="floor outdoor-areas">
+                <div class="floor-header">
+                    <div class="floor-title">CASTLE GROUNDS & PERIMETER</div>
+                    <div class="floor-number">EXT</div>
+                </div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Training Grounds</div>
+                        <ul class="room-list">
+                            <li>🎯 Outdoor shooting ranges (multiple distances)</li>
+                            <li>🏹 Archery and crossbow training areas</li>
+                            <li>🥊 Combat training circles</li>
+                            <li>🏃 Obstacle courses and parkour structures</li>
+                            <li>🎖️ Tactical simulation zones</li>
+                        </ul>
+                    </div>
+                    <div class="room-section">
+                        <div class="room-title">Forest Perimeter</div>
+                        <ul class="room-list">
+                            <li>🌲 Dense woodland with hidden paths</li>
+                            <li>🪤 Trap training areas (non-lethal)</li>
+                            <li>🕳️ Underground tunnel entrances</li>
+                            <li>📡 Perimeter surveillance towers</li>
+                            <li>🚁 Helicopter landing pad</li>
+                        </ul>
+                    </div>
+                    <div class="room-section">
+                        <div class="room-title">Security Perimeter</div>
+                        <ul class="room-list">
+                            <li>⚡ Electrified fence systems</li>
+                            <li>📹 Motion-sensor camera network</li>
+                            <li>🐕 Guard patrol routes</li>
+                            <li>🚪 Secondary entrance gates</li>
+                            <li>🔥 Emergency evacuation routes</li>
+                        </ul>
+                        <div class="access-info">
+                            <strong class="restricted">MAXIMUM SECURITY:</strong> 24/7 armed patrols, automated defense systems active
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 10 -->
+            <div class="floor common-areas">
+                <div class="floor-header">
+                    <div class="floor-title">COMMON AREAS</div>
+                    <div class="floor-number">F10</div>
+                </div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Recreational Facilities</div>
+                        <ul class="room-list">
+                            <li>🍽️ Grand cafeteria with panoramic forest views</li>
+                            <li>🎮 Recreation rooms with VR gaming pods</li>
+                            <li>💪 High-tech gym with biometric monitoring</li>
+                            <li>📚 Digital library with holographic displays</li>
+                            <li>🧘 Meditation chambers with ambient lighting</li>
+                            <li>🎭 Entertainment lounge with projection systems</li>
+                        </ul>
+                        <div class="access-info">
+                            <strong>Access:</strong> All members welcome during designated hours
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 9 -->
+            <div class="floor command-floors">
+                <div class="floor-header">
+                    <div class="floor-title">RM'S PRIVATE FLOOR</div>
+                    <div class="floor-number">F9</div>
+                </div>
+                <div class="division-chief">Supreme Commander: RM (Namjoon)</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Executive Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 Luxurious private quarters with smart home systems</li>
+                            <li>💼 Command office with holographic displays</li>
+                            <li>🗺️ Strategic war room with 3D mapping</li>
+                            <li>📖 Personal library with rare manuscripts</li>
+                            <li>🤝 Secure meeting room with encryption systems</li>
+                            <li>🛡️ Personal armory and safe room</li>
+                        </ul>
+                        <div class="access-info">
+                            <strong class="restricted">RESTRICTED:</strong> RM and authorized personnel only
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 8 -->
+            <div class="floor command-floors">
+                <div class="floor-header">
+                    <div class="floor-title">COMMAND CENTER</div>
+                    <div class="floor-number">F8</div>
+                </div>
+                <div class="division-chief">Deputy Commander: Moon</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Command Operations</div>
+                        <ul class="room-list">
+                            <li>🎯 Strategic operations center with multiple screens</li>
+                            <li>👥 Council meeting room with secure communications</li>
+                            <li>📄 Digital archives with quantum encryption</li>
+                            <li>🏢 Moon's command office with tactical displays</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Deputy Commander Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 Moon's private quarters with security monitoring</li>
+                            <li>🛏️ Rest area with emergency alert systems</li>
+                            <li>📱 Personal communication hub</li>
+                        </ul>
+                    </div>
+                    <div class="access-info">
+                        <strong>Access:</strong> Council of 9 members and authorized personnel
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 7 -->
+            <div class="floor division-floors">
+                <div class="floor-header">
+                    <div class="floor-title">PROCUREMENT & WEAPONS</div>
+                    <div class="floor-number">F7</div>
+                </div>
+                <div class="division-chief">Chief: Jessi | Deputy: Kai</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Operations Center</div>
+                        <ul class="room-list">
+                            <li>📦 Automated logistics center with AI inventory</li>
+                            <li>👥 Recruitment processing with biometric scanning</li>
+                            <li>🔧 Advanced weapons maintenance lab</li>
+                            <li>🏠 Jessi's private office & quarters</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Deputy Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 Kai's private quarters</li>
+                            <li>📋 Deputy's administrative office</li>
+                            <li>🔐 Secure storage for sensitive materials</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 6 -->
+            <div class="floor division-floors">
+                <div class="floor-header">
+                    <div class="floor-title">CYBER INTELLIGENCE</div>
+                    <div class="floor-number">F6</div>
+                </div>
+                <div class="division-chief">Chief: AD (Yoongi) | Deputy: Aera</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Digital Operations</div>
+                        <ul class="room-list">
+                            <li>💻 Quantum server farms with cooling systems</li>
+                            <li>🖥️ Multi-screen hacking stations with neural interfaces</li>
+                            <li>📹 Global surveillance hub with AI monitoring</li>
+                            <li>🎮 AD's "gamer cave" office with custom RGB setup</li>
+                            <li>🔬 Experimental tech development lab</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Chief & Deputy Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 AD's private quarters with gaming setup</li>
+                            <li>🏠 Aera's deputy quarters</li>
+                            <li>🛏️ Rest pods for extended operations</li>
+                            <li>☕ Private break room with energy drinks</li>
+                        </ul>
+                    </div>
+                    <div class="access-info">
+                        <strong class="classified">CLASSIFIED:</strong> Quantum encryption and biometric locks
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 5 -->
+            <div class="floor division-floors">
+                <div class="floor-header">
+                    <div class="floor-title">ASSASSINATION DIVISION</div>
+                    <div class="floor-number">F5</div>
+                </div>
+                <div class="division-chief">Chiefs: Jeon (Tactical) & V (Stealth) | Deputies: Takama & Dongho</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">East Wing - Tactical</div>
+                        <ul class="room-list">
+                            <li>🎯 Advanced sniper training with wind simulation</li>
+                            <li>📋 Mission planning with 3D holographic modeling</li>
+                            <li>🏠 Jeon's private quarters with weapon storage</li>
+                        </ul>
+                    </div>
+                    <div class="room-section">
+                        <div class="room-title">West Wing - Stealth</div>
+                        <ul class="room-list">
+                            <li>🗡️ Close combat dojo with adaptive surfaces</li>
+                            <li>🥷 Stealth practice with laser grid systems</li>
+                            <li>🏠 V's private quarters with hidden passages</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Deputy Quarters & Shared</div>
+                        <ul class="room-list">
+                            <li>🏠 Takama's deputy quarters (Tactical)</li>
+                            <li>🏠 Dongho's deputy quarters (Stealth)</li>
+                            <li>⚔️ Shared equipment armory</li>
+                            <li>🏋️ Joint training facilities</li>
+                            <li>🎯 Virtual reality combat simulators</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 4 -->
+            <div class="floor division-floors">
+                <div class="floor-header">
+                    <div class="floor-title">SEDUCTION DIVISION</div>
+                    <div class="floor-number">F4</div>
+                </div>
+                <div class="division-chief">Chief: Flower (Chaewon) | Deputy: Hana (Undercover)</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Operations</div>
+                        <ul class="room-list">
+                            <li>🎭 Advanced training rooms with holographic scenarios</li>
+                            <li>📺 Multi-target surveillance monitoring</li>
+                            <li>🕵️ Intelligence analysis hub with AI assistance</li>
+                            <li>🏠 Flower's private office & quarters</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Deputy & Member Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 Hana's deputy quarters (when not undercover)</li>
+                            <li>🏠 Room 4A: Y/N & Yunjin (shared suite)</li>
+                            <li>🏠 Room 4B: Kazuha, Sakura & Eunchae</li>
+                            <li>🏠 Rooms 4C-F: Other division members</li>
+                            <li>💄 Shared preparation and disguise room</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 3 -->
+            <div class="floor division-floors">
+                <div class="floor-header">
+                    <div class="floor-title">FINANCIAL OPERATIONS</div>
+                    <div class="floor-number">F3</div>
+                </div>
+                <div class="division-chief">Chief: JM (Jimin) | Deputy: Miyoung</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Financial Center</div>
+                        <ul class="room-list">
+                            <li>💰 Quantum-encrypted accounting offices</li>
+                            <li>📊 Real-time global transaction monitoring</li>
+                            <li>₿ Cryptocurrency mining and trading center</li>
+                            <li>🏠 JM's private office & quarters</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Deputy Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 Miyoung's deputy quarters</li>
+                            <li>💼 Deputy's secure office</li>
+                            <li>🔐 Backup financial data vault</li>
+                            <li>☕ Private break room for long operations</li>
+                        </ul>
+                    </div>
+                    <div class="access-info">
+                        <strong class="classified">CLASSIFIED:</strong> Quantum financial encryption protocols
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floor 2 -->
+            <div class="floor division-floors">
+                <div class="floor-header">
+                    <div class="floor-title">MEDICAL DIVISION</div>
+                    <div class="floor-number">F2</div>
+                </div>
+                <div class="division-chief">Chief: J-Hope (Hoseok) | Deputy: Juhye</div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Medical Facilities</div>
+                        <ul class="room-list">
+                            <li>🚨 Emergency trauma bay with robotic surgery</li>
+                            <li>🛏️ Recovery wards with biometric monitoring</li>
+                            <li>💊 Automated pharmacy <span class="restricted">(restricted access)</span></li>
+                            <li>📋 Digital medical records <span class="restricted">(encrypted)</span></li>
+                            <li>🏠 J-Hope's private medical office & quarters</li>
+                        </ul>
+                    </div>
+                    <div class="room-section deputy-quarters">
+                        <div class="room-title">Deputy Quarters</div>
+                        <ul class="room-list">
+                            <li>🏠 Juhye's deputy quarters</li>
+                            <li>🔬 Deputy's research lab</li>
+                            <li>📱 Emergency response coordination center</li>
+                            <li>🛏️ On-call rest area</li>
+                        </ul>
+                    </div>
+                    <div class="access-info">
+                        <strong>Access:</strong> Emergency treatment open to all, restricted areas Chief/Deputy only
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ground Floor -->
+            <div class="floor basement">
+                <div class="floor-header">
+                    <div class="floor-title">GROUND FLOOR SECURITY</div>
+                    <div class="floor-number">F1</div>
+                </div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Security Checkpoint</div>
+                        <ul class="room-list">
+                            <li>🚪 Reinforced main entrance with biometric scanners</li>
+                            <li>📋 Reception with AI-assisted threat assessment</li>
+                            <li>🔍 Multi-layer security screening</li>
+                            <li>⏱️ Visitor containment chambers</li>
+                            <li>👮 24/7 armed guard stations</li>
+                            <li>🚨 Emergency lockdown control room</li>
+                        </ul>
+                        <div class="access-info">
+                            <strong class="restricted">MAXIMUM SECURITY:</strong> Quantum encryption, neural pattern recognition
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basement Levels -->
+            <div class="floor basement">
+                <div class="floor-header">
+                    <div class="floor-title">BASEMENT LEVEL 1</div>
+                    <div class="floor-number">B1</div>
+                </div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Vehicle Operations</div>
+                        <ul class="room-list">
+                            <li>🚗 Automated parking with electric vehicle charging</li>
+                            <li>🔧 High-tech vehicle maintenance bay</li>
+                            <li>⛽ Fuel storage with environmental controls</li>
+                            <li>🏍️ Motorcycle and emergency vehicle bay</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="floor basement">
+                <div class="floor-header">
+                    <div class="floor-title">BASEMENT LEVEL 2</div>
+                    <div class="floor-number">B2</div>
+                </div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Training Complex</div>
+                        <ul class="room-list">
+                            <li>🥊 Holographic combat training chambers</li>
+                            <li>🎮 Full-immersion VR simulation pods</li>
+                            <li>🏃 Adaptive physical conditioning areas</li>
+                            <li>🧠 Psychological conditioning rooms</li>
+                            <li>🎯 Indoor firing ranges with smart targets</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="floor basement">
+                <div class="floor-header">
+                    <div class="floor-title">BASEMENT LEVEL 3</div>
+                    <div class="floor-number">B3</div>
+                </div>
+                <div class="floor-content">
+                    <div class="room-section">
+                        <div class="room-title">Arsenal Vault</div>
+                        <ul class="room-list">
+                            <li>🔫 Climate-controlled weapons vault</li>
+                            <li>💣 Explosive materials storage (isolated)</li>
+                            <li>🔒 Experimental tech prototypes</li>
+                            <li>🛡️ Personal armor and protective gear</li>
+                            <li>⚡ Emergency power generators</li>
+                        </ul>
+                        <div class="access-info">
+                            <strong class="restricted">HIGHEST SECURITY:</strong> Retinal scan, voice print, DNA verification required
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color outdoor-color"></div>
+                <strong>Outdoor Grounds</strong><br>
+                Training & perimeter security
+            </div>
+            <div class="legend-item">
+                <div class="legend-color basement-color"></div>
+                <strong>Basement/Security</strong><br>
+                High security zones
+            </div>
+            <div class="legend-item">
+                <div class="legend-color command-color"></div>
+                <strong>Command Structure</strong><br>
+                Leadership floors
+            </div>
+            <div class="legend-item">
+                <div class="legend-color division-color"></div>
+                <strong>Division Operations</strong><br>
+                Specialized departments
+            </div>
+            <div class="legend-item">
+                <div class="legend-color common-color"></div>
+                <strong>Common Areas</strong><br>
+                Shared facilities
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>⚠️ Security Protocol:</strong> This cyber-gothic fortress employs quantum encryption, neural pattern recognition, and AI-assisted threat assessment. All areas feature holographic displays, automated systems, and emergency protocols. The castle's gothic architecture houses cutting-edge technology, creating an imposing blend of medieval aesthetics and futuristic functionality. Hidden passages, emergency evacuation routes, and panic rooms are integrated throughout the structure.
+        </div>
+    </div>
+
+    <script>
+        // Enhanced interactive effects
+        document.querySelectorAll('.floor').forEach(floor => {
+            floor.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            floor.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Cyberpunk click effects
+        document.querySelectorAll('.floor').forEach(floor => {
+            floor.addEventListener('click', function() {
+                // Remove highlight from all floors
+                document.querySelectorAll('.floor').forEach(f => {
+                    f.style.borderColor = f.classList.contains('outdoor-areas') ? 'rgba(0, 255, 0, 0.4)' :
+                                         f.classList.contains('basement') ? 'rgba(255, 140, 0, 0.4)' :
+                                         f.classList.contains('command-floors') ? 'rgba(255, 215, 0, 0.4)' :
+                                         f.classList.contains('division-floors') ? 'rgba(138, 43, 226, 0.4)' :
+                                         'rgba(50, 205, 50, 0.4)';
+                    f.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                });
+                
+                // Highlight clicked floor with cyberpunk effect
+                this.style.borderColor = '#00ffff';
+                this.style.boxShadow = `
+                    0 0 30px rgba(0, 255, 255, 0.6),
+                    0 0 60px rgba(0, 255, 255, 0.4),
+                    0 15px 40px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2)
+                `;
+                
+                // Remove highlight after 4 seconds
+                setTimeout(() => {
+                    this.style.borderColor = this.classList.contains('outdoor-areas') ? 'rgba(0, 255, 0, 0.4)' :
+                                            this.classList.contains('basement') ? 'rgba(255, 140, 0, 0.4)' :
+                                            this.classList.contains('command-floors') ? 'rgba(255, 215, 0, 0.4)' :
+                                            this.classList.contains('division-floors') ? 'rgba(138, 43, 226, 0.4)' :
+                                            'rgba(50, 205, 50, 0.4)';
+                    this.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                }, 4000);
+            });
+        });
+
+        // Add subtle animation to the title
+        const title = document.querySelector('h1');
+        setInterval(() => {
+            title.style.textShadow = `
+                0 0 ${Math.random() * 15 + 5}px rgba(0, 255, 255, 0.8),
+                0 0 ${Math.random() * 25 + 15}px rgba(0, 255, 255, 0.5),
+                0 0 ${Math.random() * 35 + 25}px rgba(0, 255, 255, 0.3),
+                2px 2px 4px rgba(0,0,0,0.8)
+            `;
+        }, 2000);
+    </script>
+</body>
+</html>
