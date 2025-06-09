@@ -1044,7 +1044,7 @@
             <p>Interactive floor layout reference</p>
         </div>
         <div class="blueprint-image">
-            <img src="castle_blueprint.JPG" alt="Kkangpae Castle Blueprint" id="castle-blueprint">
+            <img src="castle_blueprint.jpg" alt="Kkangpae Castle Blueprint" id="castle-blueprint">
         </div>
     </div>
 
@@ -1559,8 +1559,8 @@
     window.addEventListener('load', async function() {
         try {
             // Try to load the uploaded image
-            const response = await window.fs.readFile('castle_blueprint.JPG');
-            const blob = new Blob([response], { type: 'image/png' });
+            const response = await window.fs.readFile('castle_blueprint.jpg');
+            const blob = new Blob([response], { type: 'image/jpeg' });
             const imageUrl = URL.createObjectURL(blob);
             document.getElementById('castle-blueprint').src = imageUrl;
         } catch (error) {
