@@ -1555,23 +1555,6 @@
 </div>
 
 <script>
-    // Load the uploaded blueprint image
-    window.addEventListener('load', async function() {
-        try {
-            // Try to load the uploaded image
-            const response = await window.fs.readFile('castle_blueprint.jpg');
-            const blob = new Blob([response], { type: 'image/jpeg' });
-            const imageUrl = URL.createObjectURL(blob);
-            document.getElementById('castle-blueprint').src = imageUrl;
-        } catch (error) {
-            // If the file doesn't exist, you can replace this with a direct URL to your image
-            console.log('Blueprint image not found, using placeholder');
-            // You would replace this with your actual image URL when deploying
-            document.getElementById('castle-blueprint').style.display = 'none';
-            document.querySelector('.blueprint-image').innerHTML = '<p style="color: var(--neon-accent); font-size: 1.2em;">Blueprint image will be loaded here</p>';
-        }
-    });
-
     // Enhanced interactive effects with gothic cyber animations
     document.querySelectorAll('.floor').forEach(floor => {
         floor.addEventListener('mouseenter', function() {
@@ -1659,6 +1642,16 @@
                 drop-shadow(0 0 40px rgba(30, 144, 255, 0.3))
             `;
         }, 2000);
+    });
+
+    // Check if image loads properly, show error message if not
+    document.getElementById('castle-blueprint').addEventListener('error', function() {
+        this.style.display = 'none';
+        document.querySelector('.blueprint-image').innerHTML = '<p style="color: var(--warning-orange); font-size: 1.2em; text-align: center;">⚠️ Blueprint image not found<br><small>Make sure "castle_blueprint.jpg" is in the same folder</small></p>';
+    });
+
+    document.getElementById('castle-blueprint').addEventListener('load', function() {
+        console.log('Blueprint image loaded successfully!');
     });
 </script>
 ```
