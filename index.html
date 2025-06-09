@@ -1044,7 +1044,7 @@
             <p>Interactive floor layout reference</p>
         </div>
         <div class="blueprint-image">
-            <img src="castle_blueprint.jpg" alt="Kkangpae Castle Blueprint" id="castle-blueprint">
+            <img src="castle_blueprint.JPG" alt="Kkangpae Castle Blueprint" id="castle-blueprint">
         </div>
     </div>
 
@@ -1647,7 +1647,7 @@
     // Check if image loads properly, show error message if not
     document.getElementById('castle-blueprint').addEventListener('error', function() {
         this.style.display = 'none';
-        document.querySelector('.blueprint-image').innerHTML = '<p style="color: var(--warning-orange); font-size: 1.2em; text-align: center;">⚠️ Blueprint image not found<br><small>Make sure "castle_blueprint.jpg" is in the same folder</small></p>';
+        document.querySelector('.blueprint-image').innerHTML = '<p style="color: var(--warning-orange); font-size: 1.2em; text-align: center;">⚠️ Blueprint image not found<br><small>Make sure "castle_blueprint.JPG" is in the same folder</small></p>';
     });
 
     document.getElementById('castle-blueprint').addEventListener('load', function() {
